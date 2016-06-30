@@ -67,7 +67,7 @@ def create_nn():
 	# ## Baking Recipe <Updates>
 	all_params = lasagne.layers.get_all_params(output1)
 	# updates = lasagne.updates.adam(loss.mean(),all_params)
-	updates = lasagne.updates.nesterov_momentum(loss.mean(), all_params, learning_rate = 0.5, momentum=0.9)
+	updates = lasagne.updates.nesterov_momentum(loss.mean(), all_params, learning_rate = 0.1, momentum=0.9)
 
 	# Compile everything as functions
 	train = theano.function(inputs=[patch_in.input_var,true_output],outputs = [net_output,loss],updates =  updates )
@@ -78,7 +78,7 @@ def create_nn():
 
 if __name__=="__main__":
     train,test = create_nn()
-    for i in range(100):
+    for i in range(300):
     	image ,landmarks = load(i+1)
     	result , loss = train(image,landmarks)
     	print loss.mean()
