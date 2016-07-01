@@ -21,7 +21,11 @@ def give_image(row):
 	# image = (np.asarray(str,dtype = np.float32))
 	for i in range(96):
 		for j in range(96):
-			image[i][j] = str[96*j + i]
+			image[i][j] = str[96*i + j]
+	
+
+	# image[38+i][66+j] = 0 #image[y][x]
+	image = image/255.
 	image = image.reshape(1,1,96,96)
 
 	
@@ -78,10 +82,18 @@ def create_nn():
 
 if __name__=="__main__":
     train,test = create_nn()
-    for i in range(300):
-    	image ,landmarks = load(i+1)
-    	result , loss = train(image,landmarks)
-    	print loss.mean()
+    for i in range(100):
+		try:
+			image ,landmarks = load(i+1)
+			result , loss  = train(image,landmarks)
+			print (loss.mean())*10000  		    
+		except:
+			print "Error" , i
+    		
+	    	
+
+
+    	
 
 
 
