@@ -1,17 +1,18 @@
-import csv
-import numpy as np
+import csv , random , cPickle
 from PIL import Image
+from tqdm import *
+
+
+import numpy as np
+from skimage.io import imread
+
+import theano
+import theano.tensor as T
+
+import lasagne
 from lasagne import layers
 from lasagne.updates import nesterov_momentum
 from nolearn.lasagne import NeuralNet
-from tqdm import *
-import theano
-import theano.tensor as T
-import lasagne
-import numpy as np
-import cPickle
-from skimage.io import imread
-import random
 
 
 def give_image(row):
@@ -82,11 +83,11 @@ def create_nn():
 
 if __name__=="__main__":
     train,test = create_nn()
-    for i in range(100):
+    for i in range(10000):
 		try:
 			image ,landmarks = load(i+1)
 			result , loss  = train(image,landmarks)
-			print (loss.mean())*10000  		    
+			print loss.mean() 		    
 		except:
 			print "Error" , i
     		
